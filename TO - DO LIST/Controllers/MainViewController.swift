@@ -15,7 +15,6 @@ class MainViewController: UIViewController {
     
     private func toggleEdit() {
         self.isHiddenDeleteButton.toggle()
-      //  self.statusDoClear
         self.editButtonLabel.text = isHiddenDeleteButton ? "Edit" : "Done"
         tableViewTasks.reloadData()
     }
@@ -221,20 +220,10 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             cell.removeButton.isHidden = isHiddenDeleteButton
             cell.editImage.isHidden = isHiddenDeleteButton
             
-//            cell.statusDoClear = {
-//                [ weak self ] in
-//                if let isHiddenButton = self?.isHiddenDeleteButton {
-//                    if isHiddenButton {
-//                        cell.imageStatus.tintColor = UIColor(red: 139/255, green: 150/255, blue: 64/255, alpha: 1)
-//                        print("пиздааа")
-//                        cell.todoStatus.backgroundColor = UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.4)
-//                    } else {
-//                        cell.todoStatus.backgroundColor = UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.1)
-//                        print("хуууй")
-//                        cell.imageStatus.tintColor = UIColor(red: 139/255, green: 150/255, blue: 64/255, alpha: 0.5)
-//                    }
-//                }
-//            }
+            cell.imageStatus.tintColor = isHiddenDeleteButton ? UIColor(red: 139/255, green: 150/255, blue: 64/255, alpha: 1) : UIColor(red: 139/255, green: 150/255, blue: 64/255, alpha: 0.2)
+            cell.todoStatus.backgroundColor = isHiddenDeleteButton ? UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.4) : UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.1)
+            cell.todoStatus.layer.borderColor = isHiddenDeleteButton ? UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.6).cgColor : UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 0.2).cgColor
+
             cell.deleteTap = {
                 [ weak self, weak tableView ] in
                 guard
