@@ -7,11 +7,12 @@
 
 import UIKit
 
-
 class MainViewController: UIViewController {
     
     var isHiddenDeleteButton = true
     var statusDoClear: (() -> Void)?
+    
+    var editingTaskID: String?
     
     private func toggleEdit() {
         self.isHiddenDeleteButton.toggle()
@@ -195,11 +196,13 @@ class MainViewController: UIViewController {
         present(controller, animated: true)
     }
     
-    private func presentEditTask() {
+    private func presentEditTask(id: String) {
         let controller = EditTaskViewController()
         controller.modalPresentationStyle = .pageSheet
         controller.delegate = self
-        
+        if let task = tasksViewModel.tasks.first(where: { $0.id == id }) {
+            controller.config(task: task)
+        }
         if let sheet = controller.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.detents = [.medium()]
@@ -264,7 +267,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let task = tasksViewModel.tasks[indexPath.row]
             task.toggleIsDone()
         } else {
-            self.presentEditTask()
+            let task = tasksViewModel.tasks[indexPath.row]
+            editingTaskID = task.id
+            self.presentEditTask(id: task.id)
         }
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -281,7 +286,8 @@ extension MainViewController: AddNewTaskProtocolDelegate {
 }
 extension MainViewController: EditTaskProtocolDelegate {
     func didEditTask(text: String, priority: TaskPriority, deadline: Date) {
-        tasksViewModel.editTask(id: tasksViewModel.tasks.first?.id ?? "", newText: text, newPriority: priority, newDeadline: deadline)
+        guard let id = editingTaskID else { return }
+        tasksViewModel.editTask(id: id, newText: text, newPriority: priority, newDeadline: deadline)
         tableViewTasks.reloadData()
         updateEmptyStatus()
     }

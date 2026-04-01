@@ -45,5 +45,6 @@ class ToDoList {
         task.text = newText
         task.priority = newPriority
         task.deadline = newDeadline
+        
     }
 }

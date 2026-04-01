@@ -95,19 +95,6 @@ class EditTaskViewController: UIViewController {
         return $0
     }(UIVisualEffectView())
     
-    func editTask() {
-        let text = taskEditTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-    
-        guard !text.isEmpty else { return }
-        
-        let priority = selectedPriority()
-        let deadline = deadlinePicker.date
-        
-        delegate?.didEditTask(text: text, priority: priority, deadline: deadline)
-        
-        dismiss(animated: true)
-    }
-    
     private lazy var saveButton: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setTitle("Save", for: .normal)
@@ -123,6 +110,35 @@ class EditTaskViewController: UIViewController {
         self?.editTask()
     }))
     
+     func config(task: Task) {
+         
+        taskEditTextView.text = task.text
+        placeholderLabel.isHidden = !task.text.isEmpty
+        deadlinePicker.date = task.deadline
+        
+     switch task.priority {
+            case .low:
+                prioritySegmentControl.selectedSegmentIndex = 0
+            case .medium:
+                prioritySegmentControl.selectedSegmentIndex = 1
+            case .high:
+                prioritySegmentControl.selectedSegmentIndex = 2
+        }
+    }
+    
+    func editTask() {
+        let text = taskEditTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+        guard !text.isEmpty else { return }
+        
+        let priority = selectedPriority()
+        let deadline = deadlinePicker.date
+        
+        delegate?.didEditTask(text: text, priority: priority, deadline: deadline)
+        
+        dismiss(animated: true)
+    }
+
 
      func selectedPriority() -> TaskPriority {
         
@@ -137,6 +153,7 @@ class EditTaskViewController: UIViewController {
             return .medium
         }
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,7 +170,6 @@ class EditTaskViewController: UIViewController {
         taskEditTextView.addSubview(placeholderLabel)
         
         saveButton.enableHapticAnimation()
-        
         setupConstrains()
         
     }
