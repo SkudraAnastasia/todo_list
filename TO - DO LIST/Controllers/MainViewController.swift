@@ -195,6 +195,20 @@ class MainViewController: UIViewController {
         present(controller, animated: true)
     }
     
+    private func presentEditTask() {
+        let controller = EditTaskViewController()
+        controller.modalPresentationStyle = .pageSheet
+        controller.delegate = self
+        
+        if let sheet = controller.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.detents = [.medium()]
+        }
+        
+        present(controller, animated: true)
+    }
+    
+    
     private func updateEmptyStatus() {
         emptyLabel.isHidden = !tasksViewModel.isEmpty
         tableViewTasks.isHidden = tasksViewModel.isEmpty
@@ -245,11 +259,13 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {   //  <-- ф-ия обрабатывает тап
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard isHiddenDeleteButton else { return }
-        
-        let task = tasksViewModel.tasks[indexPath.row]
-        task.toggleIsDone()
+    
+        if isHiddenDeleteButton {
+            let task = tasksViewModel.tasks[indexPath.row]
+            task.toggleIsDone()
+        } else {
+            self.presentEditTask()
+        }
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
@@ -259,6 +275,13 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 extension MainViewController: AddNewTaskProtocolDelegate {
     func didAddTask(text: String, priority: TaskPriority, deadline: Date) {
         tasksViewModel.addTask(text: text, priority: priority, deadline: deadline)
+        tableViewTasks.reloadData()
+        updateEmptyStatus()
+    }
+}
+extension MainViewController: EditTaskProtocolDelegate {
+    func didEditTask(text: String, priority: TaskPriority, deadline: Date) {
+        tasksViewModel.editTask(id: tasksViewModel.tasks.first?.id ?? "", newText: text, newPriority: priority, newDeadline: deadline)
         tableViewTasks.reloadData()
         updateEmptyStatus()
     }

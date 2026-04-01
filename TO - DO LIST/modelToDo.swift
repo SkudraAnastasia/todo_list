@@ -8,10 +8,10 @@ enum TaskPriority: String {
 
 class Task {
     private(set) var id: String = String(UUID().uuidString.prefix(8))
-    private(set) var text: String
-    private(set) var isDone: Bool
-    private(set) var priority: TaskPriority
-    private(set) var deadline: Date
+    var text: String
+    var isDone: Bool
+    var priority: TaskPriority
+    var deadline: Date
     
     func toggleIsDone() {
         isDone.toggle()
@@ -36,5 +36,14 @@ class ToDoList {
     func removeTask(id: String) {
         guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
         tasks.remove(at: index)
+    }
+    
+    func editTask(id: String, newText: String, newPriority: TaskPriority, newDeadline: Date) {
+        guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
+        
+        let task = tasks[index]
+        task.text = newText
+        task.priority = newPriority
+        task.deadline = newDeadline
     }
 }

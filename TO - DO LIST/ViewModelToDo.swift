@@ -26,6 +26,10 @@ class ViewModelToDo {
     func removeTask(id: String) {
         todoList.removeTask(id: id)
     }
+    
+    func editTask(id: String, newText: String, newPriority: TaskPriority, newDeadline: Date) {
+        todoList.editTask(id: id, newText: newText, newPriority: newPriority, newDeadline: newDeadline)
+    }
 }
 
 extension Date {

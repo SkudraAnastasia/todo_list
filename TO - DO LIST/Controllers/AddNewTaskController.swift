@@ -42,7 +42,7 @@ class AddNewTaskController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var taskTextView: UITextView = {
+      lazy var taskTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .systemFont(ofSize: 16, weight: .light)
         $0.textColor = .black

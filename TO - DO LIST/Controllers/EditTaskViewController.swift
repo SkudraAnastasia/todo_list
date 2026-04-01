@@ -7,7 +7,7 @@
 import UIKit
 
 protocol EditTaskProtocolDelegate: AnyObject {
-    
+    func didEditTask(text: String, priority: TaskPriority, deadline: Date)
 }
 class EditTaskViewController: UIViewController {
     
@@ -39,7 +39,7 @@ class EditTaskViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var taskTextView: UITextView = { //сделать так, чтоб при нажатии был написан текст таски
+    private lazy var taskEditTextView: UITextView = { //сделать так, чтоб при нажатии был написан текст таски
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .systemFont(ofSize: 16, weight: .light)
         $0.textColor = .black
@@ -95,15 +95,15 @@ class EditTaskViewController: UIViewController {
         return $0
     }(UIVisualEffectView())
     
-    func addTask() {
-        let text = taskTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+    func editTask() {
+        let text = taskEditTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
     
         guard !text.isEmpty else { return }
         
         let priority = selectedPriority()
         let deadline = deadlinePicker.date
         
-       // delegate?.didAddTask(text: text, priority: priority, deadline: deadline)
+        delegate?.didEditTask(text: text, priority: priority, deadline: deadline)
         
         dismiss(animated: true)
     }
@@ -120,7 +120,7 @@ class EditTaskViewController: UIViewController {
         
         return $0
     }(UIButton(primaryAction: UIAction { [weak self] _ in
-        self?.addTask()
+        self?.editTask()
     }))
     
 
@@ -144,13 +144,13 @@ class EditTaskViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        view.addSubview(labelAddTask)
-        contentView.addSubview(taskTextView)
+        view.addSubview(labelEditTask)
+        contentView.addSubview(taskEditTextView)
         contentView.addSubview(prioritySegmentControl)
         contentView.addSubview(deadlinePicker)
         contentView.addSubview(blurSaveButton)
         blurSaveButton.contentView.addSubview(saveButton)
-        taskTextView.addSubview(placeholderLabel)
+        taskEditTextView.addSubview(placeholderLabel)
         
         saveButton.enableHapticAnimation()
         
@@ -161,7 +161,7 @@ class EditTaskViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        taskTextView.becomeFirstResponder()
+        taskEditTextView.becomeFirstResponder()
         }
     }
 
@@ -176,11 +176,11 @@ extension EditTaskViewController: UITextViewDelegate {
 extension EditTaskViewController {
     private func setupConstrains() {
         NSLayoutConstraint.activate([
-            labelAddTask.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            labelAddTask.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            labelAddTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            labelEditTask.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            labelEditTask.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            labelEditTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            scrollView.topAnchor.constraint(equalTo: labelAddTask.bottomAnchor, constant: 8),
+            scrollView.topAnchor.constraint(equalTo: labelEditTask.bottomAnchor, constant: 8),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -191,13 +191,13 @@ extension EditTaskViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            taskTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            taskTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
-            taskTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            taskTextView.heightAnchor.constraint(equalToConstant: 90),
+            taskEditTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            taskEditTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
+            taskEditTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            taskEditTextView.heightAnchor.constraint(equalToConstant: 90),
             
-            placeholderLabel.topAnchor.constraint(equalTo: taskTextView.topAnchor, constant: 8),
-            placeholderLabel.leadingAnchor.constraint(equalTo: taskTextView.leadingAnchor, constant: 6),
+            placeholderLabel.topAnchor.constraint(equalTo: taskEditTextView.topAnchor, constant: 8),
+            placeholderLabel.leadingAnchor.constraint(equalTo: taskEditTextView.leadingAnchor, constant: 6),
             
             blurSaveButton.topAnchor.constraint(equalTo: deadlinePicker.bottomAnchor, constant: 26),
             blurSaveButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 68),
@@ -209,12 +209,12 @@ extension EditTaskViewController {
             saveButton.topAnchor.constraint(equalTo: blurSaveButton.topAnchor),
             saveButton.bottomAnchor.constraint(equalTo: blurSaveButton.bottomAnchor),
             
-            deadlinePicker.topAnchor.constraint(equalTo: taskTextView.bottomAnchor, constant: 42),
+            deadlinePicker.topAnchor.constraint(equalTo: taskEditTextView.bottomAnchor, constant: 42),
             deadlinePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             deadlinePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             deadlinePicker.heightAnchor.constraint(equalToConstant: 150),
             
-            prioritySegmentControl.topAnchor.constraint(equalTo: taskTextView.bottomAnchor, constant: 0),
+            prioritySegmentControl.topAnchor.constraint(equalTo: taskEditTextView.bottomAnchor, constant: 0),
             prioritySegmentControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             prioritySegmentControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             prioritySegmentControl.heightAnchor.constraint(equalToConstant: 28),
