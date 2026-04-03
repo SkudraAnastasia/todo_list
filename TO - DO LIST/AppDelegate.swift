@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let container = NSPersistentContainer(name: "TO - DO LIST") // СОЗДАЕМ КОНТЕЙНЕР
         container.loadPersistentStores(completionHandler:  { (storeDescription, error) in // загружаем, проверяем на ошибки
             if let error = error as NSError? {
-                fatalError("Ups! Something went wrong: \(error), \(error.userInfo)")
+                fatalError("Ops! Something went wrong: \(error), \(error.userInfo)")
             }
         })
         return container
@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try context.save()
             } catch {
                 let nserror = error as NSError
-                    fatalError("Ups! Something went wrong: \(nserror), \(nserror.userInfo)")
+                    fatalError("Ops! Something went wrong: \(nserror), \(nserror.userInfo)")
             }
         }
     }
