@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		336283E32F7E30F0007B2D04 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336283E22F7E30F0007B2D04 /* Entity+CoreDataProperties.swift */; };
+		336283E52F7F2D5F007B2D04 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336283E42F7F2D00007B2D04 /* CoreDataManager.swift */; };
+		336283E82F7F3A4D007B2D04 /* EntityToDoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 336283E62F7F3A4D007B2D04 /* EntityToDoList.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		336283E22F7E30F0007B2D04 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		336283E42F7F2D00007B2D04 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		336283E72F7F3A4D007B2D04 /* EntityToDoList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntityToDoList.xcdatamodel; sourceTree = "<group>"; };
 		8BFF3B642F5883BE007298A7 /* TO - DO LIST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TO - DO LIST.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -50,7 +52,8 @@
 		8BFF3B5B2F5883BE007298A7 = {
 			isa = PBXGroup;
 			children = (
-				336283E22F7E30F0007B2D04 /* Entity+CoreDataProperties.swift */,
+				336283E42F7F2D00007B2D04 /* CoreDataManager.swift */,
+				336283E62F7F3A4D007B2D04 /* EntityToDoList.xcdatamodeld */,
 				8BFF3B662F5883BE007298A7 /* TO - DO LIST */,
 				8BFF3B652F5883BE007298A7 /* Products */,
 			);
@@ -138,7 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				336283E32F7E30F0007B2D04 /* Entity+CoreDataProperties.swift in Sources */,
+				336283E52F7F2D5F007B2D04 /* CoreDataManager.swift in Sources */,
+				336283E82F7F3A4D007B2D04 /* EntityToDoList.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +354,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		336283E62F7F3A4D007B2D04 /* EntityToDoList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				336283E72F7F3A4D007B2D04 /* EntityToDoList.xcdatamodel */,
+			);
+			currentVersion = 336283E72F7F3A4D007B2D04 /* EntityToDoList.xcdatamodel */;
+			path = EntityToDoList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8BFF3B5C2F5883BE007298A7 /* Project object */;
 }
