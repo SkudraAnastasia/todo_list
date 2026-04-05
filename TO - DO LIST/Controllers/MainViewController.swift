@@ -252,7 +252,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 let task = self.tasksViewModel.tasks[indexPath.row]
                 self.tasksViewModel.removeTask(id: task.id)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.reloadData()
                 self.updateEmptyStatus()
             }
         

@@ -162,19 +162,19 @@ class TableCellView: UITableViewCell {
             editImage.widthAnchor.constraint(equalToConstant: 20),
             editImage.heightAnchor.constraint(equalToConstant: 20),
             
-            priorityLabel.topAnchor.constraint(equalTo: todoCellLabel.bottomAnchor, constant: 8),
+            priorityLabel.topAnchor.constraint(equalTo: todoCellLabel.bottomAnchor, constant: 4),
             priorityLabel.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 26),
             priorityLabel.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -8),
-            priorityLabel.bottomAnchor.constraint(equalTo: todoCellView.bottomAnchor, constant: -8),
+            priorityLabel.bottomAnchor.constraint(equalTo: deadlineLabel.topAnchor, constant: -2),
         
             priorityImage.centerYAnchor.constraint(equalTo: priorityLabel.centerYAnchor),
             priorityImage.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 8),
             priorityImage.heightAnchor.constraint(equalToConstant: 12),
             priorityImage.widthAnchor.constraint(equalToConstant: 12),
             
-            deadlineLabel.topAnchor.constraint(equalTo: priorityLabel.bottomAnchor, constant: 2),
             deadlineLabel.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 26),
             deadlineLabel.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -8),
+            deadlineLabel.bottomAnchor.constraint(equalTo: todoCellView.bottomAnchor, constant: 6),
             
             deadlineImage.centerYAnchor.constraint(equalTo: deadlineLabel.centerYAnchor),
             deadlineImage.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 8),
