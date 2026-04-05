@@ -7,7 +7,7 @@ enum TaskPriority: String {
 }
 
 class Task {
-    private(set) var id: String = String(UUID().uuidString.prefix(8))
+    private(set) var id: String 
     var text: String
     var isDone: Bool
     var priority: TaskPriority
