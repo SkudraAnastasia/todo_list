@@ -100,9 +100,9 @@ final class ViewModelToDo {
             
             CoreDataManager.shared.save()
             fetchTasks()
-            }
         }
     }
+}
 
 
 extension Date {
@@ -112,3 +112,5 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+//щщщщщщщщщщщ
