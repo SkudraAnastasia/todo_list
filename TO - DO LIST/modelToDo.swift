@@ -12,39 +12,26 @@ class Task {
     var isDone: Bool
     var priority: TaskPriority
     var deadline: Date
+
     
-    func toggleIsDone() {
-        isDone.toggle()
-    }
-    
-    init(text: String, isDone: Bool = false, priority: TaskPriority, deadline: Date) {
+    init(id: String, text: String, isDone: Bool = false, priority: TaskPriority, deadline: Date) {
         self.text = text
         self.isDone = isDone
         self.priority = priority
         self.deadline = deadline
+        self.id = id
+    }
+    convenience init(text: String, isDone: Bool = false, priority: TaskPriority, deadline: Date) {
+        self.init(
+            id: String(UUID().uuidString.prefix(8)),
+            text: text,
+            isDone: isDone,
+            priority: priority,
+            deadline: deadline
+        )
     }
 }
 
 class ToDoList {
     var tasks: [Task] = []
-    
-    
-    func addTask(task: Task) {
-        tasks.append(task)
-    }
-    
-    func removeTask(id: String) {
-        guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
-        tasks.remove(at: index)
-    }
-    
-    func editTask(id: String, newText: String, newPriority: TaskPriority, newDeadline: Date) {
-        guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
-        
-        let task = tasks[index]
-        task.text = newText
-        task.priority = newPriority
-        task.deadline = newDeadline
-        
-    }
 }

@@ -228,6 +228,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: TableCellView.reuseID, for: indexPath) as? TableCellView {
         
             let task = tasksViewModel.tasks[indexPath.row]
@@ -261,18 +262,18 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {   //  <-- ф-ия обрабатывает тап
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
     
         if isHiddenDeleteButton {
             let task = tasksViewModel.tasks[indexPath.row]
-            task.toggleIsDone()
+            tasksViewModel.toggleIsDone(id: task.id)
         } else {
             let task = tasksViewModel.tasks[indexPath.row]
             editingTaskID = task.id
             self.presentEditTask(id: task.id)
         }
         
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 

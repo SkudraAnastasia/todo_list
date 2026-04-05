@@ -6,14 +6,7 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		336284912F7F4B32007B2D04 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336284902F7F4B32007B2D04 /* Entity+CoreDataProperties.swift */; };
-		336284922F7F4B32007B2D04 /* Entity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3362848F2F7F4B32007B2D04 /* Entity+CoreDataClass.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		3362848F2F7F4B32007B2D04 /* Entity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		336284902F7F4B32007B2D04 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8BFF3B642F5883BE007298A7 /* TO - DO LIST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TO - DO LIST.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,8 +45,6 @@
 		8BFF3B5B2F5883BE007298A7 = {
 			isa = PBXGroup;
 			children = (
-				3362848F2F7F4B32007B2D04 /* Entity+CoreDataClass.swift */,
-				336284902F7F4B32007B2D04 /* Entity+CoreDataProperties.swift */,
 				8BFF3B662F5883BE007298A7 /* TO - DO LIST */,
 				8BFF3B652F5883BE007298A7 /* Products */,
 			);
@@ -141,8 +132,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				336284912F7F4B32007B2D04 /* Entity+CoreDataProperties.swift in Sources */,
-				336284922F7F4B32007B2D04 /* Entity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
