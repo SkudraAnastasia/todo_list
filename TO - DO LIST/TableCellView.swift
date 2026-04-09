@@ -12,9 +12,15 @@ class TableCellView: UITableViewCell {
     static let reuseID = "todoCell"
     
     private lazy var todoCellView: UIView = {
-        
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .white
+        $0.backgroundColor = .init(red: 254/255, green: 252/255, blue: 249/255, alpha: 1)
+        $0.layer.cornerRadius = 12
+        $0.clipsToBounds = true
+        $0.layer.shadowColor = .init(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
+        $0.layer.shadowRadius = 10
+        $0.layer.shadowOpacity = 0.3
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+    
         return $0
     }(UIView())
     
@@ -61,7 +67,7 @@ class TableCellView: UITableViewCell {
     
     lazy var editImage: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.image = UIImage(systemName: "pencil.line")
+        $0.image = UIImage(systemName: "pencil")
         $0.tintColor = UIColor(red: 225/255, green: 215/255, blue: 210/255, alpha: 1)
         
         return $0
@@ -101,6 +107,9 @@ class TableCellView: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        
         contentView.addSubview(todoCellView)
         todoCellView.addSubview(removeButton)
         todoCellView.addSubview(todoCellLabel)
@@ -135,30 +144,27 @@ class TableCellView: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            todoCellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            todoCellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            todoCellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            todoCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            todoCellView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            todoCellView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+            todoCellView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
+            todoCellView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             
-            removeButton.topAnchor.constraint(equalTo: todoCellView.topAnchor, constant: 4),
-            removeButton.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -8),
+            removeButton.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -12),
+            removeButton.centerYAnchor.constraint(equalTo: todoCellView.centerYAnchor, constant: -5),
             removeButton.widthAnchor.constraint(equalToConstant: 26),
             removeButton.heightAnchor.constraint(equalToConstant: 26),
             
-           
-            todoStatus.topAnchor.constraint(equalTo: todoCellView.topAnchor, constant: 8),
-            todoStatus.leadingAnchor.constraint(equalTo: todoCellView.leadingAnchor, constant: 8),
+            todoStatus.centerYAnchor.constraint(equalTo: todoCellLabel.centerYAnchor),
+            todoStatus.leadingAnchor.constraint(equalTo: todoCellView.leadingAnchor, constant: 14),
             todoStatus.widthAnchor.constraint(equalToConstant: 20),
             todoStatus.heightAnchor.constraint(equalToConstant: 20),
-            todoStatus.bottomAnchor.constraint(lessThanOrEqualTo: todoCellView.bottomAnchor, constant: -8),
-
-        
-            todoCellLabel.topAnchor.constraint(equalTo: todoCellView.topAnchor, constant: 8),
-            todoCellLabel.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 8),
-            todoCellLabel.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -32),
             
-            editImage.topAnchor.constraint(equalTo: todoStatus.bottomAnchor, constant: 4),
-            editImage.leadingAnchor.constraint(equalTo: todoCellView.leadingAnchor, constant: 8),
+            todoCellLabel.topAnchor.constraint(equalTo: todoCellView.topAnchor, constant: 12),
+            todoCellLabel.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 8),
+            todoCellLabel.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -64),
+            
+            editImage.centerYAnchor.constraint(equalTo: todoCellView.centerYAnchor),
+            editImage.trailingAnchor.constraint(equalTo: removeButton.leadingAnchor),
             editImage.widthAnchor.constraint(equalToConstant: 20),
             editImage.heightAnchor.constraint(equalToConstant: 20),
             
@@ -174,7 +180,7 @@ class TableCellView: UITableViewCell {
             
             deadlineLabel.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 26),
             deadlineLabel.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -8),
-            deadlineLabel.bottomAnchor.constraint(equalTo: todoCellView.bottomAnchor, constant: 6),
+            deadlineLabel.bottomAnchor.constraint(equalTo: todoCellView.bottomAnchor, constant: -12),
             
             deadlineImage.centerYAnchor.constraint(equalTo: deadlineLabel.centerYAnchor),
             deadlineImage.leadingAnchor.constraint(equalTo: todoStatus.trailingAnchor, constant: 8),

@@ -16,7 +16,18 @@ class MainViewController: UIViewController {
     
     private func toggleEdit() {
         self.isHiddenDeleteButton.toggle()
-        self.editButtonLabel.text = isHiddenDeleteButton ? "Edit" : "Done"
+        
+        UIView.performWithoutAnimation {
+            if isHiddenDeleteButton {
+                editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+                editButton.tintColor = .black
+            } else {
+                editButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+                editButton.tintColor = UIColor(red: 139/255, green: 180/255, blue: 64/255, alpha: 1)
+            }
+            editButton.layoutIfNeeded()
+        }
+        
         tableViewTasks.reloadData()
     }
     
@@ -29,46 +40,41 @@ class MainViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var blurButtonTheme: UIVisualEffectView = {
-        
-        let blurEffect = UIBlurEffect(style: .systemMaterial)
-        $0.effect = blurEffect
-        
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.layer.cornerRadius = 12
-        $0.clipsToBounds = true
-        
-        
-        let image = UIImageView(image: UIImage(systemName: "sun.max"))
-        
-        image.frame = CGRect(x: 8, y: 8, width: 32, height: 32)
-        image.tintColor = .black
-        $0.contentView.addSubview(image)
-        
-        $0.isUserInteractionEnabled = false
-        return $0
-    }(UIVisualEffectView())
-    
     private lazy var buttonTheme: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .clear
-        $0.layer.cornerRadius = 12
+        
+        $0.configuration = .glass()
+        $0.configuration?.image = UIImage(systemName: "sun.max")
+        
         $0.layer.shadowColor = .init(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-        $0.layer.shadowRadius = 10
-        $0.layer.shadowOpacity = 0.3
+        $0.layer.shadowRadius = 6
+        $0.layer.shadowOpacity = 0.1
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         return $0
     }(UIButton())
     
+    private lazy var editButton: UIButton = {
+       // $0.translatesAutoresizingMaskIntoConstraints = false
+        
+        //$0.configuration = .prominentClearGlass()
+        //$0.configuration?.baseBackgroundColor = UIColor(red: 245/255, green: 238/255, blue: 231/255, alpha: 1)
+       // $0.configuration?.image = UIImage(systemName: "pencil")
+        $0.setImage(UIImage(systemName: "pencil"), for: .normal)
+        $0.tintColor = .black
+        $0.backgroundColor = .clear
+        
+       
+        return $0
+    }(UIButton(primaryAction: UIAction { [ weak self ] _ in
+        self?.toggleEdit()
+    }))
+    
+    
     private lazy var viewTasks: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .white
-        $0.layer.shadowColor = .init(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-        $0.layer.shadowRadius = 2
-        $0.layer.shadowOpacity = 0.3
-        $0.layer.cornerRadius = 12
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.backgroundColor = .clear
+
         return $0
     }(UIView())
     
@@ -97,61 +103,20 @@ class MainViewController: UIViewController {
         $0.separatorStyle = .none
         $0.isHidden = true
         
+        $0.contentInset.bottom = 90
+        
         return $0
     }(UITableView())
     
-    private lazy var blurEditButton: UIVisualEffectView = {
-        
-        let blurEffect = UIBlurEffect(style: .systemMaterial)
-        $0.effect = blurEffect
-        
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.layer.cornerRadius = 16
-        $0.clipsToBounds = true
-        $0.isUserInteractionEnabled = false
-        
-        return $0
-    }(UIVisualEffectView())
-    
-    private lazy var editButtonLabel: UILabel = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.text = "Edit"
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
-        $0.textColor = .black
-        
-        
-        return $0
-    }(UILabel())
-    
-    private lazy var editButton: UIButton = {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.layer.cornerRadius = 12
-        
-        $0.layer.shadowColor = .init(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
-        $0.layer.shadowRadius = 10
-        $0.layer.shadowOpacity = 0.3
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        
-        return $0
-    }(UIButton(primaryAction: UIAction { [ weak self ] _ in
-        self?.toggleEdit()
-    }))
-    
-    
     private lazy var buttonAddTask: UIButton = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.backgroundColor = .black
-        $0.layer.cornerRadius = 32
+        $0.configuration = .glass()
         $0.layer.shadowColor = .init(red: 150/255, green: 150/255, blue: 150/255, alpha: 1)
         $0.layer.shadowRadius = 10
         $0.layer.shadowOpacity = 0.3
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        let image = UIImageView(image: UIImage(systemName: "plus"))
-        image.frame = CGRect(x: 18, y: 18, width: 28, height: 28)
-        image.tintColor = .white
-        $0.addSubview(image)
+        $0.configuration?.image = UIImage(systemName: "plus")
+
         
         return $0
     }(UIButton(primaryAction: UIAction { [weak self]  _ in
@@ -163,22 +128,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red: 235/255, green: 228/255, blue: 221/255, alpha: 1)
-        view.addSubview(titleToDo)
-        view.addSubview(buttonTheme)
-        buttonTheme.addSubview(blurButtonTheme)
-        view.addSubview(viewTasks)
-        view.addSubview(buttonAddTask)
-        view.addSubview(editButton)
-        editButton.addSubview(blurEditButton)
-        blurEditButton.contentView.addSubview(editButtonLabel)
-        viewTasks.addSubview(tableViewTasks)
-        viewTasks.addSubview(emptyLabel)
+        title = "TO-DO LIST"
+        navBar()
         
-        buttonTheme.enableHapticAnimation()
-        buttonAddTask.enableHapticAnimation()
-        editButton.enableHapticAnimation()
-        
+        view.backgroundColor = UIColor(red: 245/255, green: 238/255, blue: 231/255, alpha: 1)
+        setupViews()
         setupConstraints()
         updateEmptyStatus()
     }
@@ -216,7 +170,6 @@ class MainViewController: UIViewController {
         emptyLabel.isHidden = !tasksViewModel.isEmpty
         tableViewTasks.isHidden = tasksViewModel.isEmpty
         editButton.isHidden = tasksViewModel.isEmpty
-        blurEditButton.isHidden = tasksViewModel.isEmpty
     }
     
 }
@@ -273,7 +226,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             self.presentEditTask(id: task.id)
         }
         
-        tableView.reloadRows(at: [indexPath], with: .none)
+        tableView.reloadData()
     }
 }
 
@@ -293,7 +246,7 @@ extension MainViewController: EditTaskProtocolDelegate {
         updateEmptyStatus()
     }
 }
-
+// MARK: Animation
 extension UIButton {
     func enableHapticAnimation() {
         self.addAction(UIAction  { [ weak self ] _ in
@@ -312,29 +265,61 @@ extension UIButton {
         }, for: .touchUpInside) //cобытие кнопки, которое срабатывает когда палец отпускает кнопку.
     }
 }
+// MARK: SetupViews
+extension MainViewController {
+    func setupViews() {
+        view.addSubview(viewTasks)
+        //view.addSubview(titleToDo)
+       // view.addSubview(buttonTheme)
+        view.addSubview(buttonAddTask)
+      //   view.addSubview(editButton)
+        viewTasks.addSubview(tableViewTasks)
+        viewTasks.addSubview(emptyLabel)
+        
+        buttonTheme.enableHapticAnimation()
+        buttonAddTask.enableHapticAnimation()
+        editButton.enableHapticAnimation()
+    }
+}
 
+// MARK: NagigationBar
+extension MainViewController {
+    
+    func navBar() {
+        let bar = UINavigationBarAppearance()
+        
+        bar.configureWithTransparentBackground()
+        bar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        navigationController?.navigationBar.standardAppearance = bar
+        navigationController?.navigationBar.scrollEdgeAppearance = bar
+        navigationController?.navigationBar.compactAppearance = bar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+    }
+}
+
+// MARK: Constraits
 extension MainViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleToDo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            titleToDo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleToDo.trailingAnchor.constraint(equalTo: buttonTheme.leadingAnchor, constant: -16),
+//            titleToDo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+//            titleToDo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+//            titleToDo.trailingAnchor.constraint(equalTo: buttonTheme.leadingAnchor, constant: -16),
             
-            buttonTheme.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            buttonTheme.leadingAnchor.constraint(equalTo: titleToDo.trailingAnchor, constant: 0),
-            buttonTheme.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            buttonTheme.widthAnchor.constraint(equalToConstant: 48),
-            buttonTheme.heightAnchor.constraint(equalToConstant: 48),
+//            buttonTheme.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+//            buttonTheme.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+//            buttonTheme.widthAnchor.constraint(equalToConstant: 48),
+//            buttonTheme.heightAnchor.constraint(equalToConstant: 48),
             
-            blurButtonTheme.topAnchor.constraint(equalTo: buttonTheme.topAnchor),
-            blurButtonTheme.leadingAnchor.constraint(equalTo: buttonTheme.leadingAnchor),
-            blurButtonTheme.trailingAnchor.constraint(equalTo: buttonTheme.trailingAnchor),
-            blurButtonTheme.bottomAnchor.constraint(equalTo: buttonTheme.bottomAnchor),
+//            editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+//            editButton.trailingAnchor.constraint(equalTo: buttonTheme.leadingAnchor, constant: -12),
+//            editButton.heightAnchor.constraint(equalToConstant: 48),
+//            editButton.widthAnchor.constraint(equalToConstant: 48),
             
-            viewTasks.topAnchor.constraint(equalTo: titleToDo.bottomAnchor, constant: 32),
-            viewTasks.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            viewTasks.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            viewTasks.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -120),
+            viewTasks.topAnchor.constraint(equalTo: view.topAnchor),
+            viewTasks.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewTasks.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewTasks.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             emptyLabel.centerXAnchor.constraint(equalTo: viewTasks.centerXAnchor),
             emptyLabel.centerYAnchor.constraint(equalTo: viewTasks.centerYAnchor),
@@ -342,25 +327,13 @@ extension MainViewController {
             buttonAddTask.widthAnchor.constraint(equalToConstant: 64),
             buttonAddTask.heightAnchor.constraint(equalToConstant: 64),
             buttonAddTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            buttonAddTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            buttonAddTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
             
-            tableViewTasks.topAnchor.constraint(equalTo: viewTasks.topAnchor, constant: 48),
-            tableViewTasks.leadingAnchor.constraint(equalTo: viewTasks.leadingAnchor, constant: 16),
-            tableViewTasks.trailingAnchor.constraint(equalTo: viewTasks.trailingAnchor, constant: -16),
-            tableViewTasks.bottomAnchor.constraint(equalTo: viewTasks.bottomAnchor, constant: -16),
+            tableViewTasks.topAnchor.constraint(equalTo: viewTasks.topAnchor),
+            tableViewTasks.leadingAnchor.constraint(equalTo: viewTasks.leadingAnchor),
+            tableViewTasks.trailingAnchor.constraint(equalTo: viewTasks.trailingAnchor),
+            tableViewTasks.bottomAnchor.constraint(equalTo: viewTasks.bottomAnchor),
             
-            editButton.topAnchor.constraint(equalTo: viewTasks.bottomAnchor, constant: 16),
-            editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            editButton.heightAnchor.constraint(equalToConstant: 28),
-            editButton.widthAnchor.constraint(equalToConstant: 120),
-            
-            blurEditButton.topAnchor.constraint(equalTo: editButton.topAnchor),
-            blurEditButton.leadingAnchor.constraint(equalTo: editButton.leadingAnchor),
-            blurEditButton.trailingAnchor.constraint(equalTo: editButton.trailingAnchor),
-            blurEditButton.bottomAnchor.constraint(equalTo: editButton.bottomAnchor),
-            
-            editButtonLabel.centerXAnchor.constraint(equalTo: blurEditButton.centerXAnchor),
-            editButtonLabel.centerYAnchor.constraint(equalTo: blurEditButton.centerYAnchor)
         ])
     }
 }

@@ -39,7 +39,7 @@ class EditTaskViewController: UIViewController {
         return $0
     }(UILabel())
     
-    private lazy var taskEditTextView: UITextView = { //сделать так, чтоб при нажатии был написан текст таски
+    private lazy var taskEditTextView: UITextView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = .systemFont(ofSize: 16, weight: .light)
         $0.textColor = .black
@@ -72,7 +72,6 @@ class EditTaskViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.datePickerMode = .date
         $0.preferredDatePickerStyle = .wheels
-        $0.minimumDate = Date()
         
         let calendar = Calendar.current
         if let maxDate = calendar.date(byAdding: .year, value: 2, to: Date()) {
@@ -133,6 +132,7 @@ class EditTaskViewController: UIViewController {
         
         let priority = selectedPriority()
         let deadline = deadlinePicker.date
+        deadlinePicker.minimumDate = deadline
         
         delegate?.didEditTask(text: text, priority: priority, deadline: deadline)
         
