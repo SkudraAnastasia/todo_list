@@ -55,11 +55,6 @@ class MainViewController: UIViewController {
     }(UIButton())
     
     private lazy var editButton: UIButton = {
-       // $0.translatesAutoresizingMaskIntoConstraints = false
-        
-        //$0.configuration = .prominentClearGlass()
-        //$0.configuration?.baseBackgroundColor = UIColor(red: 245/255, green: 238/255, blue: 231/255, alpha: 1)
-       // $0.configuration?.image = UIImage(systemName: "pencil")
         $0.setImage(UIImage(systemName: "pencil"), for: .normal)
         $0.tintColor = .black
         $0.backgroundColor = .clear
@@ -102,8 +97,9 @@ class MainViewController: UIViewController {
         $0.estimatedRowHeight = 60
         $0.separatorStyle = .none
         $0.isHidden = true
+        $0.showsVerticalScrollIndicator = false
         
-        $0.contentInset.bottom = 90
+        $0.contentInset.bottom = 16
         
         return $0
     }(UITableView())
@@ -128,17 +124,22 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "TO-DO LIST"
-        navBar()
+        title = "Todolist"
         
         view.backgroundColor = UIColor(red: 245/255, green: 238/255, blue: 231/255, alpha: 1)
         setupViews()
+        setupNavigationBar()
         setupConstraints()
         updateEmptyStatus()
+        
+        
+        buttonTheme.enableHapticAnimation()
+        buttonAddTask.enableHapticAnimation()
+        editButton.enableHapticAnimation()
     }
     
     private func presentAddTask() {
-        let controller = AddNewTaskController()
+        let controller = AddNewTaskViewController()
         controller.modalPresentationStyle = .pageSheet
         controller.delegate = self
         
@@ -169,7 +170,6 @@ class MainViewController: UIViewController {
     private func updateEmptyStatus() {
         emptyLabel.isHidden = !tasksViewModel.isEmpty
         tableViewTasks.isHidden = tasksViewModel.isEmpty
-        editButton.isHidden = tasksViewModel.isEmpty
     }
     
 }
@@ -269,23 +269,16 @@ extension UIButton {
 extension MainViewController {
     func setupViews() {
         view.addSubview(viewTasks)
-        //view.addSubview(titleToDo)
-       // view.addSubview(buttonTheme)
         view.addSubview(buttonAddTask)
-      //   view.addSubview(editButton)
         viewTasks.addSubview(tableViewTasks)
         viewTasks.addSubview(emptyLabel)
-        
-        buttonTheme.enableHapticAnimation()
-        buttonAddTask.enableHapticAnimation()
-        editButton.enableHapticAnimation()
     }
 }
 
 // MARK: NagigationBar
 extension MainViewController {
     
-    func navBar() {
+    func setupNavigationBar() {
         let bar = UINavigationBarAppearance()
         
         bar.configureWithTransparentBackground()
@@ -295,26 +288,15 @@ extension MainViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = bar
         navigationController?.navigationBar.compactAppearance = bar
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButton)
+        
     }
 }
+
 
 // MARK: Constraits
 extension MainViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
-//            titleToDo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-//            titleToDo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            titleToDo.trailingAnchor.constraint(equalTo: buttonTheme.leadingAnchor, constant: -16),
-            
-//            buttonTheme.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-//            buttonTheme.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            buttonTheme.widthAnchor.constraint(equalToConstant: 48),
-//            buttonTheme.heightAnchor.constraint(equalToConstant: 48),
-            
-//            editButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-//            editButton.trailingAnchor.constraint(equalTo: buttonTheme.leadingAnchor, constant: -12),
-//            editButton.heightAnchor.constraint(equalToConstant: 48),
-//            editButton.widthAnchor.constraint(equalToConstant: 48),
             
             viewTasks.topAnchor.constraint(equalTo: view.topAnchor),
             viewTasks.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -326,8 +308,9 @@ extension MainViewController {
             
             buttonAddTask.widthAnchor.constraint(equalToConstant: 64),
             buttonAddTask.heightAnchor.constraint(equalToConstant: 64),
-            buttonAddTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            buttonAddTask.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            buttonAddTask.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            buttonAddTask.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -24),
+         
             
             tableViewTasks.topAnchor.constraint(equalTo: viewTasks.topAnchor),
             tableViewTasks.leadingAnchor.constraint(equalTo: viewTasks.leadingAnchor),

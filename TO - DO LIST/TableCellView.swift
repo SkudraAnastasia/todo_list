@@ -56,7 +56,7 @@ class TableCellView: UITableViewCell {
         $0.backgroundColor = .clear
         
         let image = UIImageView(image: UIImage(systemName: "trash.fill"))
-        image.frame = CGRect(x: 4.5, y: 6, width: 24, height: 26)
+        image.frame = CGRect(x: 8.5, y: 8, width: 24, height: 26)
         image.tintColor = UIColor(red: 225/255, green: 215/255, blue: 210/255, alpha: 1)
         $0.addSubview(image)
         
@@ -151,8 +151,8 @@ class TableCellView: UITableViewCell {
             
             removeButton.trailingAnchor.constraint(equalTo: todoCellView.trailingAnchor, constant: -12),
             removeButton.centerYAnchor.constraint(equalTo: todoCellView.centerYAnchor, constant: -5),
-            removeButton.widthAnchor.constraint(equalToConstant: 26),
-            removeButton.heightAnchor.constraint(equalToConstant: 26),
+            removeButton.widthAnchor.constraint(equalToConstant: 34),
+            removeButton.heightAnchor.constraint(equalToConstant: 34),
             
             todoStatus.centerYAnchor.constraint(equalTo: todoCellLabel.centerYAnchor),
             todoStatus.leadingAnchor.constraint(equalTo: todoCellView.leadingAnchor, constant: 14),

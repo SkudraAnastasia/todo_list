@@ -12,7 +12,7 @@ protocol AddNewTaskProtocolDelegate: AnyObject {
     func didAddTask(text: String, priority: TaskPriority, deadline: Date)
 }
 
-class AddNewTaskController: UIViewController {
+class AddNewTaskViewController: UIViewController {
     
     weak var delegate: AddNewTaskProtocolDelegate?
   
@@ -168,14 +168,14 @@ class AddNewTaskController: UIViewController {
     }
 }
 // MARK: Delegate
-extension AddNewTaskController: UITextViewDelegate {
+extension AddNewTaskViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
     }
 }
 
 // MARK: constraints
-extension AddNewTaskController {
+extension AddNewTaskViewController {
     private func setupConstrains() {
         NSLayoutConstraint.activate([
             labelAddTask.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
